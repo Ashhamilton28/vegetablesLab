@@ -12,8 +12,8 @@ function Index(props) {
       <ul>
         {vegetables.map((vegetables, i) => {
           return (
-            <li>
-              <a href={`/vegetables/${i}`}>{vegetables.name}</a> is {vegetables.color} and {
+            <li key={vegetables._id}>
+              <a href={`/vegetables/${vegetables._id}`}>{vegetables.name}</a> is {vegetables.color} and {
              vegetables.readyToEat ?  ` ready to eat`
               : `not ready to eat`
             

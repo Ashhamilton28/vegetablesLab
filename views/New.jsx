@@ -14,7 +14,7 @@ function New(){
                 Color: <input type="text" name="color" />
                 <br/>
 
-                Can use Power-ups?: <input type="checkbox" name ="readyToEat"
+                ready to eat?: <input type="checkbox" name ="readyToEat"
                 />
                  <br/>
                  

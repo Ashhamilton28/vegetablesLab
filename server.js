@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose')
 //data
 const vegetables = require('./models/vegetables')
-const Vegetable = require('.models/Vegetable')
+const Vegetable = require('./models/Vegetable')
 const app = express();
 const PORT = 3000
 
@@ -21,21 +21,45 @@ app.use((req, res,next)=>{
 app.use(express.urlencoded({ extended: false }))
 
 //show all the vegetables
-app.get('/',(req,res)=>{
-    res.send(vegetables)
+app.get('/',(req, res)=>{
+    res.render(vegetables)
 })
 
 
-//return list of mario characters
+//return list of 
 app.get('/vegetables', (req, res)=>{
-    res.render('Index', {vegetables: vegetables})
+    // res.render('Index', {vegetables: vegetables})
+    Vegetable.find({},(error,allVegetables)=>{
+        res.render('Index', {vegetables: allVegetables})
+    })
 })
+
+app.post('/vegetables', (req, res) => {
+    console.log(req.body)
+    if (req.body.readyToEat === 'on') {
+        req.body.readyToEat = true;
+    } else {
+        req.body.readyToEat = false
+    }
+    // fruits.push(req.body)
+    Vegetable.create(req.body, (error, createdVegetable) => {
+        // res.send(createdFruit)
+        res.redirect('/vegetables')
+    })
+
+});
+
+
+//new vegetable route
+app.get('/vegetables/new', (req, res) => {
+    res.render('New');
+});
 
 //show route for each individual vegetable, color and if they are ready to eat
-app.get('/vegetables/:indexOfVegetablesArray', (req, res) => {
+app.get('/vegetables/:id', (req, res) => {
     // res.render('show',{vegetables: vegetables[req.params.indexOfVegetablesArray]});
-    Vegetable.findById(req.params.Id,(error, foundVegetable)=>{
-        res.render('vegetables/Show', {vegetable, foundVegetable})
+    Vegetable.findById(req.params.id,(error, foundVegetable)=>{
+        res.render('Show', {vegetable: foundVegetable})
     } )
 });
 
